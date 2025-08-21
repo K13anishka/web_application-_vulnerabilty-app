@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title or "Web Scanner" }}</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#0b1220;color:#e6eef8}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:#0f1a2f;border-bottom:1px solid #1f2b45}
+    a{color:#9fb3c8;text-decoration:none;margin-left:12px}
+    .container{max-width:880px;margin:28px auto;padding:0 16px}
+    .card{background:#0f1a2f;border:1px solid #1f2b45;border-radius:10px;padding:16px}
+    input,button{padding:10px;border-radius:8px;border:1px solid #2a3b5f;background:#0b1528;color:#e6eef8}
+    button{border:0;background:#6aa0ff;color:#041225;font-weight:700;cursor:pointer}
+    .flash .item{padding:10px;border-radius:6px;margin-bottom:8px}
+    .error{background:#3b1220}
+    .success{background:#123b20}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{border:1px solid #1f2b45;padding:8px;text-align:left}
+    footer{color:#567;text-align:center;padding:18px 0;border-top:1px solid #1f2b45;margin-top:36px}
+  </style>
+</head>
+<body>
+  <nav>
+    <div><strong>🛡️ Web Vulnerability Scanner</strong></div>
+    <div>
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+      {% endif %}
+    </div>
+  </nav>
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash">
+          {% for cat, msg in messages %}
+            <div class="item {{ cat }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </div>
+  <footer>For education only. Scan only sites you own or have permission to test.</footer>
+</body>
+</html>

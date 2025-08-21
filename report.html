@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Report: {{ url }}</h2>
+{% set result = result %}
+<div class="card">
+  <h3>Summary</h3>
+  <ul>
+    <li>Critical: {{ result.summary["Critical"] }}</li>
+    <li>High: {{ result.summary["High"] }}</li>
+    <li>Medium: {{ result.summary["Medium"] }}</li>
+    <li>Low: {{ result.summary["Low"] }}</li>
+  </ul>
+</div>
+
+<div class="card" style="margin-top:12px">
+  <h3>Findings</h3>
+  {% if not result.findings %}
+    <p>No obvious issues detected by basic checks.</p>
+  {% else %}
+  <table>
+    <tr><th>Vulnerability</th><th>Severity</th><th>Details</th></tr>
+    {% for f in result.findings %}
+      <tr>
+        <td>{{ f.name }}</td>
+        <td>{{ f.severity }}</td>
+        <td>{{ f.details }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+
+<p style="margin-top:12px">
+  <a href="{{ url_for('download_report') }}">📥 Download PDF Report</a> |
+  <a href="{{ url_for('dashboard') }}">← Back to Dashboard</a>
+</p>
+{% endblock %}

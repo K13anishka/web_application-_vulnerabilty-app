@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Dashboard</h2>
+<form method="post" class="card" style="display:flex;flex-direction:column;gap:10px">
+  <label>Target URL</label>
+  <input type="text" name="url" placeholder="http://example.com" required>
+  <button type="submit">Run Scan</button>
+</form>
+<div class="card" style="margin-top:12px">
+  <strong>What this checks:</strong>
+  <ul>
+    <li>XSS (reflected) – looks for echoed payload via <code>?q=</code></li>
+    <li>Clickjacking – missing <code>X-Frame-Options</code> / CSP <code>frame-ancestors</code></li>
+    <li>SQL Injection (error-based) – DB errors after adding a quote</li>
+    <li>CSRF – forms missing anti-CSRF tokens</li>
+    <li>Broken Authentication – heuristic (e.g., non-HTTPS)</li>
+  </ul>
+</div>
+{% endblock %}
